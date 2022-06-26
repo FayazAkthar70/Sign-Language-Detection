@@ -18,13 +18,11 @@ vid = cv.VideoCapture(0)
 while True:
     isTrue, img = vid.read()
     img, results = detector.find_body(img)
-    img = detector.draw_landmarks(img)
-    
     current_time = time.time()
     fps = str(int(1/(current_time-prev_time)))
     prev_time = current_time
     cv.putText(img, fps, (10,70), cv.FONT_HERSHEY_COMPLEX, 2, (0,0,0), 3)
-    
+    print(detector.extract_keypoints(img).shape)
     img = cv.flip(img, 1)
     cv.imshow('video',img)
     if cv.waitKey(10) & 0xFF == ord("q"):   #press q to close video
