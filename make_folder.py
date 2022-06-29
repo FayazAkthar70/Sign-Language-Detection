@@ -6,7 +6,7 @@ import numpy as np
 DATA_PATH = os.path.join('Data')
 actions = np.array(['Hello', 'Thanks', 'ILoveYou'])
 no_sequence = 30
-sequence_length = 50
+sequence_length = 30
 start_folder = 0
 
 if __name__ == '__main__':

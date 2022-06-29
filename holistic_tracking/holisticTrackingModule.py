@@ -32,10 +32,10 @@ class holisticDetector():
         pose = []
         if self.results.pose_landmarks:
             for lnd in self.results.pose_landmarks.landmark:
-                pose+= [lnd.x,lnd.y,lnd.z,lnd.visibility]
+                pose+= [lnd.x,lnd.y, lnd.z, lnd.visibility]
             return np.array(pose)
         else:
-            return np.zeros(shape=132)
+            return np.zeros(shape=132)   # 33 landmarks * 4(x,y and visibility). Dscarded z-axis as it is not used to determine depth as of now. ref: mediapipe documentation
     
     def extract_face(self, img):
         face = []
@@ -44,7 +44,7 @@ class holisticDetector():
                 face+= [lnd.x,lnd.y,lnd.z]
             return np.array(face)   
         else:
-            return np.zeros(shape=1404)
+            return np.zeros(shape=1404) #468 landmarks * 3(x, y and z)
     
     def extract_left_hand(self, img):
         handl = []
@@ -54,7 +54,7 @@ class holisticDetector():
                 handl+= [lnd.x, lnd.y, lnd.z]
             return np.array(handl)    
         else:
-            return np.zeros(shape=63)
+            return np.zeros(shape=63)   # 21 landmarks * 3
 
     def extract_right_hand(self, img):
         handr = []
@@ -63,7 +63,7 @@ class holisticDetector():
                 handr+= [lnd.x, lnd.y, lnd.z]
             return np.array(handr)
         else:
-            return np.zeros(shape=63)
+            return np.zeros(shape=63)   # 21 landmarks * 3
     
     def extract_keypoints(self, img):
         face = self.extract_face(img)
@@ -72,15 +72,6 @@ class holisticDetector():
         handr = self.extract_right_hand(img)
         return np.concatenate([face, pose, handl, handr])
         
-    # def find_position(self, img, draw=True, hand_no=0):
-    #     hand_landmarks = []
-    #     if self.results.multi_hand_landmarks:
-    #         my_hand = self.results.multi_hand_landmarks[hand_no]
-    #         for id, landmark in enumerate(my_hand.landmark):
-    #             h, w, c = img.shape
-    #             cx, cy = int(w*landmark.x), int(h*landmark.y)
-    #             hand_landmarks.append([id,cx,cy])
-    #     return hand_landmarks
     def draw_landmarks(self, img):
         if self.results.face_landmarks:
             self.mpDraw.draw_landmarks(img, self.results.face_landmarks, self.mpHolistic.FACEMESH_CONTOURS,
