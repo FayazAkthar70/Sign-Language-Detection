@@ -1,5 +1,3 @@
-./Data/
-./action.h5
-./Logs
+
 ./ipynb_checkpoints
 ./__pycache__
